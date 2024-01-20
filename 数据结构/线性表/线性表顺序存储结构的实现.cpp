@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 //多项式的线性表实现
-#define MAXSIZE 1000;	//多项式可能达到的最大长度
+#define MAXSIZE 1000	//多项式可能达到的最大长度
 
 typedef struct {
 	float p;	//多项式的系数
@@ -22,6 +22,7 @@ typedef struct {
 #define ERROR		0
 #define INFEASIBLE	-1
 #define OVERFLOW	-2
+
 
 //Status 是函数的类型，其值是函数结果状态代码
 typedef int Status;
@@ -56,9 +57,41 @@ int IsEmpty(SqList& L) {
 }
 
 //【算法2.2】顺序表的取值
-int GetElem(SqList L, int i, ElemType& e) {
+Status GetElem(SqList L, int i, ElemType& e) {
 	if (i<0 || i>L.length)return ERROR;
 
 	e = L.elem[i - 1];
 	return OK;
+}
+
+//【算法2.4】顺序表插入数据
+Status ListInsert(SqList& L ,int i, ElemType e) {
+	int k;
+	if (L.length == MAXSIZE ) {
+		return ERROR;
+	}
+	if (i<1 || i>L.length+1) {
+		return ERROR;
+	}
+	if (i <= L.length) {		//判断数据插入的位置是否在线性表的末端
+		for (k = L.length; k > +i; k--) {		//腾出位置，供新的数据存放
+			L.elem[k + 1] = L.elem[k];
+		}
+	}
+	L.elem[i - 1] = e;
+	L.length++;
+	return OK;
+}
+
+//【算法2.5】线性表的删除操作
+Status ListDelete(SqList& L, int i, ElemType &e) {
+
+	int k;
+	if (L.length == 0) {
+		return ERROR;
+	}
+	if (i<1 || i>L.length) {
+		return ERROR;
+	}
+	e = L.elem[i-1];
 }
