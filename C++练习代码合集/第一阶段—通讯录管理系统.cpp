@@ -19,7 +19,7 @@ void addPeron(Books* abs);
 int check(Books* s, string name);
 void viewPreson(Books* abs);
 void find(Books* abs);
-void abc(Books* abs)£»
+void abc(Books* abs);
 
 int main() {
 	ViewMenu();
@@ -43,7 +43,7 @@ int main() {
 			find(&abs);
 			break;
 		case 5:
-			abc(&abs)£»
+			abc(&abs);
 			break;
 		case 6:
 			abs.size = 0;
