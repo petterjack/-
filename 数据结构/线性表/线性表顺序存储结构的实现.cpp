@@ -28,6 +28,12 @@ typedef struct {
 typedef int Status;
 typedef Polynomial ElemType;
 
+Status visit(ElemType c)
+{
+	cout << c.e;
+	return OK;
+}
+
 //【算法2.1】初始化线性表（1.18）
 Status lnitList_Sq(SqList& L) {
 	L.elem = new ElemType[1000];
@@ -41,6 +47,13 @@ void DestoryList(SqList& L) {
 	if (L.elem) delete L.elem;	//释放空间
 }
 
+Status ListEmpty(SqList L) {
+	if (L.length == 0)
+		return TRUE;
+	else
+		return ERROR;
+}
+
 //补充——清空线性表
 void ClearList(SqList& L) {
 	L.length = 0;
@@ -51,10 +64,6 @@ int GetLength(SqList& L) {
 	return (L.length);
 }
 
-int IsEmpty(SqList& L) {
-	if (L.length == 0)return 0;
-	else return 0;
-}
 
 //【算法2.2】顺序表的取值
 Status GetElem(SqList L, int i, ElemType& e) {
@@ -95,3 +104,44 @@ Status ListDelete(SqList& L, int i, ElemType &e) {
 	}
 	e = L.elem[i-1];
 }
+
+int LocateElem(SqList L, ElemType e)
+{
+	int i;
+	if (L.length == 0)
+		return 0;
+	for (i = 0; i < L.length; i++)
+	{
+		if (L.elem[i].p == e.p)//由于该顺序表中elem存储了2个数据，所以要精确到某一数据。
+			break;
+	}
+	if (i >= L.length)
+		return 0;
+
+	return i + 1;
+}
+
+Status ListTraverse(SqList L) {
+	int i;
+	for (i = 0; i < L.length; i++) {
+		visit(L.elem[i]);
+		cout << "\n";
+	}
+	return OK;
+}
+
+/*将所有的在线性表Lb中但不在La中的数据元素插入到La中*/
+void unionL(SqList* La, SqList Lb)
+{
+	int La_len, Lb_len, i;
+	ElemType e;                        /*声明与La和Lb相同的数据元素e*/
+	La_len = GetLength(*La);            /*求线性表的长度 */
+	Lb_len = GetLength(Lb);
+	for (i = 1; i <= Lb_len; i++)
+	{
+		GetElem(Lb, i, e);              /*取Lb中第i个数据元素赋给e*/
+		if (!LocateElem(*La, e))        /*La中不存在和e相同数据元素*/
+			ListInsert(*La, ++La_len, e); /*插入*/
+	}
+}
+

@@ -15,6 +15,12 @@ typedef struct {
 	int cur;		/*游标，为0师表示无指向*/
 }Component,StaticLinkList[MAXSIZE];
 
+Status visit(ElemType c)
+{
+	printf("%c ", c);
+	return OK;
+}
+
 /*静态链表初始化*/
 Status InitList(StaticLinkList space) {
 	int i;
@@ -43,6 +49,9 @@ int ListLength(StaticLinkList L)
 	}
 	return i;
 }
+
+
+
 
 /*静态链表插入操作*/
 Status ListInsert(StaticLinkList L, int i, ElemType e) {
@@ -82,5 +91,20 @@ Status ListDelete(StaticLinkList L, int i)
 	j = L[k].cur;
 	L[k].cur = L[j].cur;
 	Free_SSL(L, j);
+	return OK;
+}
+
+Status ListTraverse(StaticLinkList L)
+{
+	int j = 0;
+	int i = L[MAXSIZE - 1].cur;
+	while (i)
+	{
+		visit(L[i].data);
+		i = L[i].cur;
+		j++;
+	}
+	return j;
+	printf("\n");
 	return OK;
 }
